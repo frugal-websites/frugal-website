@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-frugalwebsite-dev-104946-authRole",
+      "UnauthRoleArn": "arn:aws:iam::732681589104:role/amplify-frugalwebsite-dev-104946-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::732681589104:role/amplify-frugalwebsite-dev-104946-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-frugalwebsite-dev-104946-deployment",
+      "UnauthRoleName": "amplify-frugalwebsite-dev-104946-unauthRole",
+      "StackName": "amplify-frugalwebsite-dev-104946",
+      "StackId": "arn:aws:cloudformation:us-east-1:732681589104:stack/amplify-frugalwebsite-dev-104946/83504660-3711-11eb-862f-0aece6d977c1",
+      "AmplifyAppId": "d1bpyrpmosdec7"
+    },
+    "categories": {
+      "auth": {
+        "frugalwebsitea884fc46": {}
+      }
+    }
+  }
+}

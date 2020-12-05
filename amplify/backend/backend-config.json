@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "frugalwebsitea884fc46": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "storage": {
+    "FrugalContent": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
+}
