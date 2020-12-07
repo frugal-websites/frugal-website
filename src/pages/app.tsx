@@ -1,19 +1,5 @@
 import React from "react"
-import Amplify from "aws-amplify"
-import { navigate, Link } from "gatsby"
-import {
-  AmplifyAuthenticator,
-  AmplifySignUp,
-  AmplifySignIn,
-  AmplifySignOut,
-} from "@aws-amplify/ui-react"
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
-import awsconfig from "../aws-exports"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
 import AppWithAuth from "../components/AppWithAuth"
-
-Amplify.configure(awsconfig)
 
 // TODO find better place
 import { I18n } from "aws-amplify"
