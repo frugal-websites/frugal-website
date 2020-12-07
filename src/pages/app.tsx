@@ -1,5 +1,5 @@
 import React from "react"
-import AppWithAuth from "../components/AppWithAuth"
+import AppWithAuth from "../components/appWithAuth"
 
 // TODO find better place
 import { I18n } from "aws-amplify"
