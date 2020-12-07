@@ -1,15 +1,13 @@
 import React from "react"
 import Amplify from "aws-amplify"
-import { navigate } from "gatsby"
 import {
   AmplifyAuthenticator,
   AmplifySignUp,
   AmplifySignIn,
-  AmplifySignOut,
 } from "@aws-amplify/ui-react"
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
 import awsconfig from "../aws-exports"
-import InsideApp from "./InsideApp"
+import InsideApp from "./insideApp"
 
 Amplify.configure(awsconfig)
 

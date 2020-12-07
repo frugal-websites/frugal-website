@@ -1,5 +1,4 @@
 import React from "react"
-import { Router } from "@reach/router"
 import Layout from "./layout"
 // import Profile from "../components/Profile"
 // import Details from "../components/Details"
