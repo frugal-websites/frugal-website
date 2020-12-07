@@ -1,5 +1,5 @@
 import React from "react"
-// import AppWithAuth from "../components/AppWithAuth"
+import AppWithAuth from "../components/AppWithAuth"
 
 // TODO find better place
 import { I18n } from "aws-amplify"
@@ -17,8 +17,7 @@ const App: React.FunctionComponent = () => {
     },
   })
 
-  // <AppWithAuth />
-  return <div>test</div>
+  return <AppWithAuth />
 }
 
 export default App
