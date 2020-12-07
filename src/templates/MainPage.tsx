@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 
 // const post = data.markdownRemark { data }
@@ -24,6 +24,8 @@ export default function MainPageTemplate({ data }) {
             data.mongodbGqlApi.layout_a.layout.isSecondDescription
           }
         />
+        <br />
+        <Link to="/">Go to Home Page</Link>
       </div>
     </Layout>
   )

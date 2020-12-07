@@ -7,79 +7,17 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import "./layout.css"
 
-import { Link } from "gatsby"
+import Header from "./header"
 
 interface LayoutProps {
   children: JSX.Element[] | JSX.Element
 }
 
-const ListLink = (props: { to: string; children: string }) => (
-  <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-    <Link to={props.to}>{props.children}</Link>
-  </li>
-)
-
-// const Layout = (props: LayoutProps) => {
-//   const data = useStaticQuery(graphql`
-//     query SiteTitleQuery {
-//       allMongodbBasicLayoutsLayoutA {
-//         edges {
-//           node {
-//             title
-//           }
-//         }
-//       }
-//     }
-//   `)
-
-// const Layout = (props: LayoutProps) => {
-//   const data = useStaticQuery(graphql`
-//     query SiteTitleQuery {
-//       site {
-//         siteMetadata {
-//           title
-//         }
-//       }
-//     }
-//   `)
-
-// 1232132
-
 const Layout = (props: LayoutProps) => {
-  // let test = 1232132
-  // const data = useStaticQuery(graphql`
-  //   query SiteTitleQuery {
-  //     mongodbGqlApi {
-  //       layout_a(query: { websiteId: 1232132 }) {
-  //         layout {
-  //           title
-  //           description
-  //           isSecondDescription
-  //         }
-  //       }
-  //     }
-  //   }
-  // `)
-
   return (
     <>
-      <header style={{ marginBottom: `1.5rem` }}>
-        <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
-          <h3 style={{ display: `inline` }}>
-            {/* {data.allMongodbBasicLayoutsLayoutA.edges[0].node?.title || `Title`} */}
-            {/* {data.site.siteMetadata.title || `Title`} */}
-            {`Title`}
-          </h3>
-        </Link>
-        <ul style={{ listStyle: `none`, float: `right` }}>
-          <ListLink to="/">Home</ListLink>
-          <ListLink to="/about/">About</ListLink>
-          <ListLink to="/contact/">Contact</ListLink>
-        </ul>
-      </header>
-
+      <Header siteTitle={`Frugal Websites`} />
       <div
         style={{
           margin: `0 auto`,
