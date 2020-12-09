@@ -8,6 +8,8 @@ import {
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
 import awsconfig from "../aws-exports"
 import InsideApp from "./insideApp"
+import { Router } from "@reach/router"
+import Profile from "./profile"
 
 Amplify.configure(awsconfig)
 
@@ -27,30 +29,37 @@ const AppWithAuth: React.FunctionComponent = () => {
   }, [])
 
   return authState === AuthState.SignedIn && user ? (
-    <InsideApp />
+    <div>
+      <Router basepath="/app">
+        <Profile path="/profile" />
+      </Router>
+      <InsideApp />
+    </div>
   ) : (
     // <App />
-    <AmplifyAuthenticator usernameAlias="email">
-      <AmplifySignUp
-        slot="sign-up"
-        usernameAlias="email"
-        formFields={[
-          {
-            type: "email",
-            label: "Email",
-            placeholder: "example@email.com",
-            required: true,
-          },
-          {
-            type: "password",
-            label: "Password",
-            placeholder: "********",
-            required: true,
-          },
-        ]}
-      />
-      <AmplifySignIn slot="sign-in" usernameAlias="email" />
-    </AmplifyAuthenticator>
+    <div>
+      <AmplifyAuthenticator usernameAlias="email">
+        <AmplifySignUp
+          slot="sign-up"
+          usernameAlias="email"
+          formFields={[
+            {
+              type: "email",
+              label: "Email",
+              placeholder: "example@email.com",
+              required: true,
+            },
+            {
+              type: "password",
+              label: "Password",
+              placeholder: "********",
+              required: true,
+            },
+          ]}
+        />
+        <AmplifySignIn slot="sign-in" usernameAlias="email" />
+      </AmplifyAuthenticator>
+    </div>
   )
 }
 
