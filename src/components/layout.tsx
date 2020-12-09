@@ -8,7 +8,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import Header from "./header"
+import Header from "./Header"
 
 interface LayoutProps {
   children: JSX.Element[] | JSX.Element

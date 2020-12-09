@@ -7,9 +7,9 @@ import {
 } from "@aws-amplify/ui-react"
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
 import awsconfig from "../aws-exports"
-import InsideApp from "./insideApp"
+import InsideApp from "./InsideApp"
 import { Router } from "@reach/router"
-import Profile from "./profile"
+import Profile from "./Profile"
 
 Amplify.configure(awsconfig)
 
