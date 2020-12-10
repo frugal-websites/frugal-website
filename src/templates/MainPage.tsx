@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import Link from "../components/Link"
 import Layout from "../components/Layout"
 
 // const post = data.markdownRemark { data }

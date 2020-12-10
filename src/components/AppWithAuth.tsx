@@ -1,10 +1,5 @@
 import React from "react"
 import Amplify from "aws-amplify"
-import {
-  AmplifyAuthenticator,
-  AmplifySignUp,
-  AmplifySignIn,
-} from "@aws-amplify/ui-react"
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
 import awsconfig from "../aws-exports"
 import App from "./App"
@@ -29,15 +24,34 @@ const AppWithAuth: React.FunctionComponent = () => {
     })
   }, [])
 
+  const isAdmin = () => {
+    const userGroups =
+      user.signInUserSession.accessToken.payload["cognito:groups"]
+
+    if (userGroups == null) {
+      return false
+    }
+
+    if (userGroups.includes("AdminUsers")) {
+      return true
+    }
+
+    return false
+  }
+
+  const getUserEmail = () => {
+    return user.attributes.email
+  }
+
   return authState === AuthState.SignedIn && user ? (
     <div>
       <Router basepath="/app">
         <Profile path="/profile" />
       </Router>
-      <App />
+
+      <App isAdmin={isAdmin()} userEmail={getUserEmail()} />
     </div>
   ) : (
-    // <App />
     <Authentication />
   )
 }

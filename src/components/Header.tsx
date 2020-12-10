@@ -1,4 +1,4 @@
-import { Link } from "gatsby"
+import Link from "./Link"
 import PropTypes from "prop-types"
 import React from "react"
 
@@ -23,14 +23,7 @@ const Header = ({ siteTitle = "" }) => (
       }}
     >
       <h1 style={{ margin: 0, float: `left` }}>
-        <Link
-          to="/"
-          style={{
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
+        <Link to="/">{siteTitle}</Link>
       </h1>
       <ul style={{ listStyle: `none`, float: `right` }}>
         <ListLink to="/app/">Sign In</ListLink>
