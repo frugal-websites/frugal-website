@@ -6,39 +6,27 @@ const Realm = require("realm")
 // https://docs.mongodb.com/realm/node/authenticate/#node-login-anonymous
 // Get a valid Realm user access token to authenticate requests
 async function getValidAccessToken() {
-  console.log(2)
   const app = new Realm.App({ id: process.env.GATSBY_REALM_APP_ID })
   // const app = new Realm.App(process.env.GATSBY_REALM_APP_ID)
-  console.log(3)
   if (!app.currentUser) {
-    console.log(4)
     // If no user is logged in, log in an anonymous user
     try {
       // await app.logIn(Realm.Credentials.anonymous())
       const credentials = Realm.Credentials.anonymous()
       await app.logIn(credentials)
-
-      console.log("Successfully logged in!")
     } catch (err) {
       console.error("Failed to log in", err.message)
-      console.log("log Failed to log in log", err)
     }
-
-    console.log(5)
   } else {
     // The logged in user's access token might be stale,
     // Refreshing custom data also refreshes the access token
-    console.log(6)
     await app.currentUser.refreshCustomData()
-    console.log(7)
   }
-  console.log(8)
   // Get a valid access token for the current user
   return app.currentUser.accessToken
 }
 
 async function getAuthorizationToken(app) {
-  console.log(1)
   const accessToken = await getValidAccessToken(app)
 
   return `Bearer ${accessToken}`

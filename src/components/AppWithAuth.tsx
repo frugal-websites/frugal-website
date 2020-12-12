@@ -6,6 +6,8 @@ import App from "./App"
 import { Router } from "@reach/router"
 import Profile from "./Profile"
 import Authentication from "./Authentication"
+import { RealmAppProvider } from "./RealmApp"
+import RealmApolloProvider from "./RealmApolloProvider"
 
 Amplify.configure(awsconfig)
 
@@ -48,8 +50,11 @@ const AppWithAuth: React.FunctionComponent = () => {
       <Router basepath="/app">
         <Profile path="/profile" />
       </Router>
-
-      <App isAdmin={isAdmin()} userEmail={getUserEmail()} />
+      <RealmAppProvider appId={process.env.GATSBY_REALM_APP_ID}>
+        <RealmApolloProvider>
+          <App isAdmin={isAdmin()} userEmail={getUserEmail()} />
+        </RealmApolloProvider>
+      </RealmAppProvider>
     </div>
   ) : (
     <Authentication />
