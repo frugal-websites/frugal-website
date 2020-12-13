@@ -17,11 +17,11 @@ export default function MainPageTemplate({ data }) {
     <Layout>
       <div>
         <h1>MainPage</h1>
-        <div>{data.mongodbGqlApi.layout_a.layout.title}</div>
-        <div>{data.mongodbGqlApi.layout_a.layout.description}</div>
+        <div>{data.mongodbGqlApi.layout.layout.title}</div>
+        <div>{data.mongodbGqlApi.layout.layout.description}</div>
         <SecondDescription
           isSecondDescription={
-            data.mongodbGqlApi.layout_a.layout.isSecondDescription
+            data.mongodbGqlApi.layout.layout.isSecondDescription
           }
         />
         <br />
@@ -34,7 +34,7 @@ export default function MainPageTemplate({ data }) {
 export const query = graphql`
   query($_websiteId: Int!) {
     mongodbGqlApi {
-      layout_a(query: { websiteId: $_websiteId }) {
+      layout(query: { websiteId: $_websiteId }) {
         layout {
           title
           description

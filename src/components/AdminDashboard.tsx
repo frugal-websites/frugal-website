@@ -10,7 +10,7 @@ type AdminDashboardProps = {}
 // const GET_ALL_PRODUCTS = gql`
 //   query($_websiteId: Int!) {
 //     mongodbGqlApi {
-//       layout_a(query: { websiteId: $_websiteId }) {
+//       layout(query: { websiteId: $_websiteId }) {
 //         layout {
 //           title
 //           description
@@ -23,7 +23,7 @@ type AdminDashboardProps = {}
 
 const GET_ALL_PRODUCTS = gql`
   query GetLayout {
-    layout_a {
+    layout {
       layout {
         title
         description
