@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "../components/Link"
 import Layout from "../components/Layout"
+import { graphql } from "gatsby"
 
 // const post = data.markdownRemark { data }
 
@@ -17,11 +18,11 @@ export default function MainPageTemplate({ data }) {
     <Layout>
       <div>
         <h1>MainPage</h1>
-        <div>{data.mongodbGqlApi.layout.layout.title}</div>
-        <div>{data.mongodbGqlApi.layout.layout.description}</div>
+        <div>{data.mongodbGqlApi.layout.title}</div>
+        <div>{data.mongodbGqlApi.layout.description}</div>
         <SecondDescription
           isSecondDescription={
-            data.mongodbGqlApi.layout.layout.isSecondDescription
+            data.mongodbGqlApi.layout.isSecondDescription
           }
         />
         <br />
@@ -32,14 +33,12 @@ export default function MainPageTemplate({ data }) {
 }
 
 export const query = graphql`
-  query($_websiteId: Int!) {
+  query($_websiteId: String!) {
     mongodbGqlApi {
       layout(query: { websiteId: $_websiteId }) {
-        layout {
-          title
-          description
-          isSecondDescription
-        }
+        title
+        description
+        isSecondDescription
       }
     }
   }

@@ -24,11 +24,9 @@ type AdminDashboardProps = {}
 const GET_ALL_PRODUCTS = gql`
   query GetLayout {
     layout {
-      layout {
-        title
-        description
-        isSecondDescription
-      }
+      title
+      description
+      isSecondDescription
     }
   }
 `
