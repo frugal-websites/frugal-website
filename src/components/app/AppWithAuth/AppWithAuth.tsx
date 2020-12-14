@@ -1,13 +1,14 @@
 import React from "react"
 import Amplify from "aws-amplify"
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
-import awsconfig from "../aws-exports"
-import App from "./App"
+import awsconfig from "../../../aws-exports"
+import App from "../App/App"
 import { Router } from "@reach/router"
-import Profile from "./Profile"
-import Authentication from "./Authentication"
-import { RealmAppProvider } from "./RealmApp"
-import RealmApolloProvider from "./RealmApolloProvider"
+import Profile from "../Profile/Profile"
+import Authentication from "../Authentication/Authentication"
+import { RealmAppProvider } from "../RealmApp/RealmApp"
+import RealmApolloProvider from "../RealmApolloProvider/RealmApolloProvider"
+import { WebsiteIdContext } from "../WebsiteIdProvider/WebsiteIdProvider"
 
 Amplify.configure(awsconfig)
 
@@ -41,18 +42,17 @@ const AppWithAuth: React.FunctionComponent = () => {
     return false
   }
 
-  const getUserEmail = () => {
+  const getWebsiteId = () => {
     return user.attributes.email
   }
 
   return authState === AuthState.SignedIn && user ? (
     <div>
-      <Router basepath="/app">
-        <Profile path="/profile" />
-      </Router>
       <RealmAppProvider appId={process.env.GATSBY_REALM_APP_ID}>
         <RealmApolloProvider>
-          <App isAdmin={isAdmin()} userEmail={getUserEmail()} />
+          <WebsiteIdContext.Provider value={getWebsiteId()}>
+            <App isAdmin={isAdmin()} userEmail={getWebsiteId()} />
+          </WebsiteIdContext.Provider>
         </RealmApolloProvider>
       </RealmAppProvider>
     </div>

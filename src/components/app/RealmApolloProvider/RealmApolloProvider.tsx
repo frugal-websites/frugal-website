@@ -1,5 +1,5 @@
 import React from "react";
-import { useRealmApp } from "./RealmApp";
+import { useRealmApp } from "../RealmApp/RealmApp";
 import {
   ApolloClient,
   HttpLink,
@@ -7,8 +7,6 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import * as Realm from "realm-web";
-
-
 
 // Get a valid Realm user access token to authenticate requests
 async function getValidAccessToken(app) {

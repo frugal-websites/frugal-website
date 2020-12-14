@@ -1,12 +1,15 @@
 import React from "react"
-import Layout from "./Layout"
+import Layout from "../../website/Layout/Layout"
 import { AmplifySignOut } from "@aws-amplify/ui-react"
+import { RouteComponentProps } from "@reach/router"
 
-type UserDashboardProps = {
+interface IUserDashboardProps extends RouteComponentProps {
   userEmail: string
 }
 
-const UserDashboard = ({ userEmail }: UserDashboardProps) => {
+const UserDashboard: React.FunctionComponent<IUserDashboardProps> = (
+  userEmail: IUserDashboardProps
+) => {
   return (
     <Layout>
       <div>

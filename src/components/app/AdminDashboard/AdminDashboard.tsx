@@ -1,11 +1,12 @@
-import Layout from "./Layout"
+import Layout from "../../website/Layout/Layout"
 import { AmplifySignOut } from "@aws-amplify/ui-react"
 import React, { useState, useEffect } from "react"
 import fetch from "node-fetch"
 // import { useQuery } from '@apollo/react-hooks';
 import { gql, useQuery } from "@apollo/client"
+import { RouteComponentProps } from "@reach/router"
 
-type AdminDashboardProps = {}
+interface IAdminDashboardProps extends RouteComponentProps {}
 
 // const GET_ALL_PRODUCTS = gql`
 //   query($_websiteId: Int!) {
@@ -31,7 +32,7 @@ const GET_ALL_PRODUCTS = gql`
   }
 `
 
-const AdminDashboard = ({}: AdminDashboardProps) => {
+const AdminDashboard: React.FunctionComponent<IAdminDashboardProps> = ({}: IAdminDashboardProps) => {
   const [starsCount, setStarsCount] = useState(0)
   // useEffect(() => {
   // get data from ...

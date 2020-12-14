@@ -1,7 +1,7 @@
 import React from "react"
-import Link from "../components/Link"
+import Link from "../components/common/Link"
 
-import Layout from "../components/Layout"
+import Layout from "../components/website/Layout/Layout"
 import Image from "../components/Image"
 import SEO from "../components/Seo"
 
