@@ -5,6 +5,7 @@ import fetch from "node-fetch"
 // import { useQuery } from '@apollo/react-hooks';
 import { gql, useQuery } from "@apollo/client"
 import { RouteComponentProps } from "@reach/router"
+import AppLayout from "../AppLayout/AppLayout"
 
 interface IAdminDashboardProps extends RouteComponentProps {}
 
@@ -53,14 +54,12 @@ const AdminDashboard: React.FunctionComponent<IAdminDashboardProps> = ({}: IAdmi
   // }, [])
 
   return (
-    <Layout>
-      <div>
-        <div style={{ maxWidth: `200px`, margin: `1.4rem`, float: `right` }}>
-          <AmplifySignOut />
-        </div>
-        <h2>Congrats you are an Admin.</h2>
+    <AppLayout>
+      <div style={{ maxWidth: `200px`, margin: `1.4rem`, float: `right` }}>
+        <AmplifySignOut />
       </div>
-    </Layout>
+      <h2>Congrats you are an Admin.</h2>
+    </AppLayout>
   )
 }
 export default AdminDashboard

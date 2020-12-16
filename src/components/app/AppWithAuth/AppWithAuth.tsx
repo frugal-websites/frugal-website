@@ -9,12 +9,19 @@ import Authentication from "../Authentication/Authentication"
 import { RealmAppProvider } from "../RealmApp/RealmApp"
 import RealmApolloProvider from "../RealmApolloProvider/RealmApolloProvider"
 import { WebsiteIdContext } from "../WebsiteIdProvider/WebsiteIdProvider"
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  MuiThemeProvider,
+  Typography,
+} from "@material-ui/core"
 
 Amplify.configure(awsconfig)
 
 const AppWithAuth: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>()
   const [user, setUser] = React.useState<object | undefined>()
+  let theme = null
 
   React.useEffect(() => {
     onAuthUIStateChange((nextAuthState, authData) => {
@@ -46,12 +53,20 @@ const AppWithAuth: React.FunctionComponent = () => {
     return user.attributes.email
   }
 
+  const getMuiTheme = () => {
+    theme = createMuiTheme()
+    theme = responsiveFontSizes(theme)
+    return theme
+  }
+
   return authState === AuthState.SignedIn && user ? (
     <div>
       <RealmAppProvider appId={process.env.GATSBY_REALM_APP_ID}>
         <RealmApolloProvider>
           <WebsiteIdContext.Provider value={getWebsiteId()}>
-            <App isAdmin={isAdmin()} userEmail={getWebsiteId()} />
+            <MuiThemeProvider theme={getMuiTheme()}>
+              <App isAdmin={isAdmin()} userEmail={getWebsiteId()} />
+            </MuiThemeProvider>
           </WebsiteIdContext.Provider>
         </RealmApolloProvider>
       </RealmAppProvider>

@@ -13,17 +13,16 @@ type AppProps = {
 }
 
 const App = ({ isAdmin, userEmail }: AppProps) => {
+  console.log("APP_UserEmail", userEmail)
   return isAdmin ? (
     <Router>
       <AdminDashboard path="/app" />
     </Router>
   ) : (
-    <div>
-      <Router>
-        <UserDashboard path="/app" userEmail={userEmail} />
-        <Profile path="/app/profile" />
-      </Router>
-    </div>
+    <Router>
+      <UserDashboard path="/app" userEmail={userEmail} />
+      <Profile path="/app/profile" />
+    </Router>
   )
 }
 export default App

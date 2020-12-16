@@ -3,3 +3,9 @@
   --amplify-primary-tint: #26bea0;
   --amplify-primary-shade: #17806b;
 }
+
+a {
+  text-shadow: none;
+  background-image: none;
+  text-decoration: none;
+}
