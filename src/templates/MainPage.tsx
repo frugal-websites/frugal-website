@@ -21,9 +21,7 @@ export default function MainPageTemplate({ data }) {
         <div>{data.mongodbGqlApi.layout.title}</div>
         <div>{data.mongodbGqlApi.layout.description}</div>
         <SecondDescription
-          isSecondDescription={
-            data.mongodbGqlApi.layout.isSecondDescription
-          }
+          isSecondDescription={data.mongodbGqlApi.layout.isSecondDescription}
         />
         <br />
         <Link to="/">Go to Home Page</Link>

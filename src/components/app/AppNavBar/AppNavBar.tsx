@@ -49,6 +49,7 @@ export interface INavLinkValue {
 }
 
 const navLinks: INavLinkValue[] = [
+  { name: `Dashboard`, path: `/app` },
   { name: `Profile`, path: `/app/profile` },
   { name: `Fr`, path: `/app/fr` },
   { name: `En`, path: `/app/en` },
@@ -84,7 +85,7 @@ const AppNavBar: React.FunctionComponent<IAppNavBarProps> = ({}: IAppNavBarProps
                 </List>
               </Hidden>
               <Hidden mdUp>
-                <SideDrawer navLinks={navLinks} />
+                <SideDrawer navLinks={navLinks} websiteId={websiteId} />
               </Hidden>
             </Container>
           </Toolbar>

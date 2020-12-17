@@ -21,7 +21,7 @@ const AppLayout = (props: AppLayoutProps) => {
       <Container maxWidth="sm">
         <Typography
           component="div"
-          style={{ backgroundColor: "#cfe8fc", height: "100vh" }}
+          style={{ backgroundColor: "#cfe8fc", height: "200vh" }}
         >
           {props.children}
         </Typography>
