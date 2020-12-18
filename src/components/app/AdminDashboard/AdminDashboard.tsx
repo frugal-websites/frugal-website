@@ -1,7 +1,4 @@
-import Layout from "../../website/Layout/Layout"
-import { AmplifySignOut } from "@aws-amplify/ui-react"
 import React, { useState, useEffect } from "react"
-import fetch from "node-fetch"
 // import { useQuery } from '@apollo/react-hooks';
 import { gql, useQuery } from "@apollo/client"
 import { RouteComponentProps } from "@reach/router"
@@ -55,9 +52,6 @@ const AdminDashboard: React.FunctionComponent<IAdminDashboardProps> = ({}: IAdmi
 
   return (
     <AppLayout>
-      <div style={{ maxWidth: `200px`, margin: `1.4rem`, float: `right` }}>
-        <AmplifySignOut />
-      </div>
       <h2>Congrats you are an Admin.</h2>
     </AppLayout>
   )

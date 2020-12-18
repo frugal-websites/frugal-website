@@ -1,3 +1,4 @@
+import { AmplifySignOut } from "@aws-amplify/ui-react"
 import {
   Drawer,
   IconButton,
@@ -6,11 +7,13 @@ import {
   ListItemText,
   Box,
   Typography,
+  Button,
 } from "@material-ui/core"
 import { makeStyles, fade } from "@material-ui/core/styles"
 import { Menu, Close, Home } from "@material-ui/icons"
+import { navigate } from "gatsby"
 import React, { useState, Fragment } from "react"
-import { INavLinkValue } from "../AppNavBar/AppNavBar"
+import { INavLinkValue } from "../../app/AppLayout/AppLayout"
 
 // https://www.color-hex.com/color-palette/17154
 
@@ -26,7 +29,7 @@ const useStyles = makeStyles({
   root: {
     // backgroundColor: `black`,
     backgroundColor: fade(darkGray, fadeValue),
-    minHeight: `100vh`,
+    minHeight: `100%`,
     display: `flex`,
     flexDirection: `column`,
     overflow: `auto`,
@@ -41,7 +44,7 @@ const useStyles = makeStyles({
     flexDirection: `row`,
     justifyContent: `space-between`,
     alignItems: `center`,
-    margin: `0.5em`,
+    // margin: `0 0.5em`,
   },
   navBarEmail: {
     color: goldYellow,
@@ -79,6 +82,13 @@ const useStyles = makeStyles({
     justifyContent: `center`,
     overflow: `hidden`,
   },
+  footer: {
+    // backgroundColor: `turquoise`,
+    display: `flex`,
+    flexDirection: `row`,
+    alignItems: `center`,
+    justifyContent: `center`,
+  },
 })
 
 interface ISideDrawerProps {
@@ -110,7 +120,13 @@ const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
   const navBar = (websiteId: string) => (
     <Box className={classes.navBar}>
       {/* TODO review aria-label */}
-      <IconButton color="inherit" aria-label="home">
+      <IconButton
+        color="inherit"
+        aria-label="home"
+        onClick={() => {
+          console.log(websiteId)
+        }}
+      >
         <Home fontSize="large" style={{ color: goldYellow }} />
       </IconButton>
       <Typography variant="subtitle1" className={classes.navBarEmail}>
@@ -142,6 +158,27 @@ const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
     </Box>
   )
 
+  // TODO prevent duplicated code (see duplicate in NavBar)
+  const footer = (websiteId: string) => {
+    return websiteId === "" ? (
+      <Box className={classes.footer}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => {
+            navigate("/app")
+          }}
+        >
+          Sign In
+        </Button>
+      </Box>
+    ) : (
+      <Box className={classes.footer}>
+        <AmplifySignOut />
+      </Box>
+    )
+  }
+
   return (
     <Fragment>
       <IconButton edge="start" aria-label="menu" onClick={toggleDrawer(true)}>
@@ -157,6 +194,7 @@ const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
         <Box className={classes.root}>
           {navBar(websiteId)}
           {list()}
+          {footer(websiteId)}
         </Box>
       </Drawer>
     </Fragment>

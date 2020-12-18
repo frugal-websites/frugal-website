@@ -1,3 +1,3 @@
 import React from "react"
 
-export const WebsiteIdContext = React.createContext("22")
+export const WebsiteIdContext = React.createContext("")

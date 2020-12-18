@@ -1,5 +1,5 @@
 import React from "react"
-import Layout from "../../website/Layout/Layout"
+import WebsiteLayout from "../../website/WebsiteLayout/WebsiteLayout"
 import { WebsiteIdContext } from "../WebsiteIdProvider/WebsiteIdProvider"
 import { RouteComponentProps } from "@reach/router"
 import { Typography } from "@material-ui/core"

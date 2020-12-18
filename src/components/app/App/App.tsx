@@ -1,6 +1,4 @@
 import React from "react"
-import Layout from "../../website/Layout/Layout"
-import { AmplifySignOut } from "@aws-amplify/ui-react"
 import { Router } from "@reach/router"
 import Profile from "../Profile/Profile"
 

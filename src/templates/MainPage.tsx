@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "../components/common/Link"
-import Layout from "../components/website/Layout/Layout"
+import WebsiteLayout from "../components/website/WebsiteLayout/WebsiteLayout"
 import { graphql } from "gatsby"
 
 // const post = data.markdownRemark { data }
@@ -15,7 +15,7 @@ function SecondDescription(props: any) {
 
 export default function MainPageTemplate({ data }) {
   return (
-    <Layout>
+    <WebsiteLayout>
       <div>
         <h1>MainPage</h1>
         <div>{data.mongodbGqlApi.layout.title}</div>
@@ -26,7 +26,7 @@ export default function MainPageTemplate({ data }) {
         <br />
         <Link to="/">Go to Home Page</Link>
       </div>
-    </Layout>
+    </WebsiteLayout>
   )
 }
 
