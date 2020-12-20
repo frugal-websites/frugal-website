@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import Amplify from "aws-amplify"
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
 import awsconfig from "../../../aws-exports"
@@ -13,7 +13,6 @@ import {
   createMuiTheme,
   responsiveFontSizes,
   MuiThemeProvider,
-  Typography,
 } from "@material-ui/core"
 
 Amplify.configure(awsconfig)
@@ -60,7 +59,7 @@ const AppWithAuth: React.FunctionComponent = () => {
   }
 
   return authState === AuthState.SignedIn && user ? (
-    <div>
+    <Fragment>
       <RealmAppProvider appId={process.env.GATSBY_REALM_APP_ID}>
         <RealmApolloProvider>
           <WebsiteEmailIdContext.Provider value={getWebsiteId()}>
@@ -70,7 +69,7 @@ const AppWithAuth: React.FunctionComponent = () => {
           </WebsiteEmailIdContext.Provider>
         </RealmApolloProvider>
       </RealmAppProvider>
-    </div>
+    </Fragment>
   ) : (
     <Authentication />
   )

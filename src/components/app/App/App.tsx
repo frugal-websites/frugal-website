@@ -17,7 +17,7 @@ const App = ({ isAdmin, websiteEmailId }: AppProps) => {
       <AdminDashboard path="/app" />
     </Router>
   ) : (
-    <Router>
+    <Router id="reach-router-focus-wrapper">
       <UserDashboard path="/app" websiteEmailId={websiteEmailId} />
       <Profile path="/app/profile" />
     </Router>

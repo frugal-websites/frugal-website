@@ -75,6 +75,7 @@ const NavBar: React.FunctionComponent<IAppNavBarProps> = ({ navLinks }) => {
             console.log("websiteEmailId", websiteEmailId)
             navigate("/app")
           }}
+          color="secondary"
         >
           Sign In
         </Button>

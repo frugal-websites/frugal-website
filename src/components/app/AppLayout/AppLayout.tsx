@@ -8,7 +8,8 @@
 import React, { Fragment } from "react"
 import PropTypes from "prop-types"
 import NavBar, { INavLinkValue } from "../../common/NavBar/NavBar"
-import { Container, Typography } from "@material-ui/core"
+import { Box, Container, Typography } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
 
 const navLinks: INavLinkValue[] = [
   { name: `Dashboard`, path: `/app` },
@@ -17,16 +18,29 @@ const navLinks: INavLinkValue[] = [
   { name: `En`, path: `/app/en` },
 ]
 
+const useStyles = makeStyles({
+  root: {
+    height: `100%`,
+    display: `flex`,
+    flexFlow: `column`,
+  },
+  content: {
+    flex: 1, // To fill remaining space (it works because no flex attribute is set on the NavBar)
+  },
+})
+
 interface AppLayoutProps {
   children: JSX.Element[] | JSX.Element
 }
 
 const AppLayout = (props: AppLayoutProps) => {
+  const classes = useStyles()
+
   return (
-    <Fragment>
+    <Box className={classes.root}>
       <NavBar navLinks={navLinks} />
-      <Container>{props.children}</Container>
-    </Fragment>
+      <Box className={classes.content}>{props.children}</Box>
+    </Box>
   )
 }
 

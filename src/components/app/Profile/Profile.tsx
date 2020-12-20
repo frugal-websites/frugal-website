@@ -11,6 +11,7 @@ import {
 import AppLayout from "../AppLayout/AppLayout"
 import { useForm, Controller } from "react-hook-form"
 import { gql, useQuery, useMutation } from "@apollo/client"
+import LoadingPage from "../LoadingPage/LoadingPage"
 
 interface IFormInput {
   websiteEmailId: string
@@ -79,7 +80,12 @@ const Profile: React.FunctionComponent<IProfileProps> = ({}: IProfileProps) => {
     })
   }
 
-  if (loading) return <p>LOADING</p>
+  if (loading)
+    return (
+      <AppLayout>
+        <LoadingPage />
+      </AppLayout>
+    )
   if (error) return <p>ERROR</p>
 
   return (

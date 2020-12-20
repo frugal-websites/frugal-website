@@ -9,3 +9,18 @@ a {
   background-image: none;
   text-decoration: none;
 }
+
+html,
+body,
+#___gatsby {
+  height: 100%;
+}
+
+#gatsby-focus-wrapper {
+  height: 100%;
+}
+
+#reach-router-focus-wrapper {
+  /* display: flex; */
+  height: 100%;
+}
