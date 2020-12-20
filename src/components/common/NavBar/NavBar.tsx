@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { WebsiteIdContext } from "../../app/WebsiteIdProvider/WebsiteIdProvider"
+import { WebsiteEmailIdContext } from "../../app/WebsiteEmailIdProvider/WebsiteEmailIdProvider"
 import {
   AppBar,
   Toolbar,
@@ -66,13 +66,13 @@ interface IAppNavBarProps {
 const NavBar: React.FunctionComponent<IAppNavBarProps> = ({ navLinks }) => {
   const classes = useStyles()
 
-  const getLogStatusButton = (websiteId: string) => {
-    return websiteId === "" ? (
+  const getLogStatusButton = (websiteEmailId: string) => {
+    return websiteEmailId === "" ? (
       <Box className={classes.signUpBox}>
         <Button
           variant="outlined"
           onClick={() => {
-            console.log("websiteId", websiteId)
+            console.log("websiteEmailId", websiteEmailId)
             navigate("/app")
           }}
         >
@@ -87,8 +87,8 @@ const NavBar: React.FunctionComponent<IAppNavBarProps> = ({ navLinks }) => {
   }
 
   return (
-    <WebsiteIdContext.Consumer>
-      {websiteId => (
+    <WebsiteEmailIdContext.Consumer>
+      {websiteEmailId => (
         <AppBar position="static" style={{ background: "#2E3B55" }}>
           {/* maxWidth="md"  */}
           <Box className={classes.root}>
@@ -96,7 +96,7 @@ const NavBar: React.FunctionComponent<IAppNavBarProps> = ({ navLinks }) => {
               color="inherit"
               aria-label="home"
               onClick={() => {
-                console.log(websiteId)
+                console.log(websiteEmailId)
               }}
             >
               <Home fontSize="large" />
@@ -115,15 +115,15 @@ const NavBar: React.FunctionComponent<IAppNavBarProps> = ({ navLinks }) => {
                   </a>
                 ))}
               </List>
-              {getLogStatusButton(websiteId)}
+              {getLogStatusButton(websiteEmailId)}
             </Hidden>
             <Hidden mdUp>
-              <SideDrawer navLinks={navLinks} websiteId={websiteId} />
+              <SideDrawer navLinks={navLinks} websiteEmailId={websiteEmailId} />
             </Hidden>
           </Box>
         </AppBar>
       )}
-    </WebsiteIdContext.Consumer>
+    </WebsiteEmailIdContext.Consumer>
   )
 }
 

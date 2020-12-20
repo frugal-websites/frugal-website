@@ -93,12 +93,12 @@ const useStyles = makeStyles({
 
 interface ISideDrawerProps {
   navLinks: INavLinkValue[]
-  websiteId: string
+  websiteEmailId: string
 }
 
 const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
   navLinks,
-  websiteId,
+  websiteEmailId,
 }) => {
   const classes = useStyles()
   const [state, setState] = useState({ isOpen: false })
@@ -117,20 +117,20 @@ const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
     setState({ isOpen: open })
   }
 
-  const navBar = (websiteId: string) => (
+  const navBar = (websiteEmailId: string) => (
     <Box className={classes.navBar}>
       {/* TODO review aria-label */}
       <IconButton
         color="inherit"
         aria-label="home"
         onClick={() => {
-          console.log(websiteId)
+          console.log(websiteEmailId)
         }}
       >
         <Home fontSize="large" style={{ color: goldYellow }} />
       </IconButton>
       <Typography variant="subtitle1" className={classes.navBarEmail}>
-        {websiteId}
+        {websiteEmailId}
       </Typography>
       <IconButton aria-label="menu" onClick={toggleDrawer(false)}>
         <Close fontSize="large" style={{ color: goldYellow }} />
@@ -146,8 +146,8 @@ const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
     >
       <List component="nav" className={classes.list}>
         {navLinks.map(({ name, path }) => (
-          <Box className={classes.listItemBox}>
-            <a href={path} key={name} className={classes.listItemLink}>
+          <Box className={classes.listItemBox} key={name}>
+            <a href={path} className={classes.listItemLink}>
               <ListItem button>
                 <ListItemText primary={name} className={classes.listItemText} />
               </ListItem>
@@ -159,8 +159,8 @@ const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
   )
 
   // TODO prevent duplicated code (see duplicate in NavBar)
-  const footer = (websiteId: string) => {
-    return websiteId === "" ? (
+  const footer = (websiteEmailId: string) => {
+    return websiteEmailId === "" ? (
       <Box className={classes.footer}>
         <Button
           variant="outlined"
@@ -192,9 +192,9 @@ const SideDrawer: React.FunctionComponent<ISideDrawerProps> = ({
         classes={{ paper: classes.drawerPaper }}
       >
         <Box className={classes.root}>
-          {navBar(websiteId)}
+          {navBar(websiteEmailId)}
           {list()}
-          {footer(websiteId)}
+          {footer(websiteEmailId)}
         </Box>
       </Drawer>
     </Fragment>

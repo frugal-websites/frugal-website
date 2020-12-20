@@ -8,7 +8,7 @@ import Profile from "../Profile/Profile"
 import Authentication from "../Authentication/Authentication"
 import { RealmAppProvider } from "../RealmApp/RealmApp"
 import RealmApolloProvider from "../RealmApolloProvider/RealmApolloProvider"
-import { WebsiteIdContext } from "../WebsiteIdProvider/WebsiteIdProvider"
+import { WebsiteEmailIdContext } from "../WebsiteEmailIdProvider/WebsiteEmailIdProvider"
 import {
   createMuiTheme,
   responsiveFontSizes,
@@ -63,11 +63,11 @@ const AppWithAuth: React.FunctionComponent = () => {
     <div>
       <RealmAppProvider appId={process.env.GATSBY_REALM_APP_ID}>
         <RealmApolloProvider>
-          <WebsiteIdContext.Provider value={getWebsiteId()}>
+          <WebsiteEmailIdContext.Provider value={getWebsiteId()}>
             <MuiThemeProvider theme={getMuiTheme()}>
-              <App isAdmin={isAdmin()} userEmail={getWebsiteId()} />
+              <App isAdmin={isAdmin()} websiteEmailId={getWebsiteId()} />
             </MuiThemeProvider>
-          </WebsiteIdContext.Provider>
+          </WebsiteEmailIdContext.Provider>
         </RealmApolloProvider>
       </RealmAppProvider>
     </div>

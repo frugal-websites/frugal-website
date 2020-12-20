@@ -31,9 +31,9 @@ export default function MainPageTemplate({ data }) {
 }
 
 export const query = graphql`
-  query($_websiteId: String!) {
+  query($_websiteEmailId: String!) {
     mongodbGqlApi {
-      layout(query: { websiteId: $_websiteId }) {
+      layout(query: { websiteEmailId: $_websiteEmailId }) {
         title
         description
         isSecondDescription

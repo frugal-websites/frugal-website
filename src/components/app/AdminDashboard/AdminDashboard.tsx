@@ -7,9 +7,9 @@ import AppLayout from "../AppLayout/AppLayout"
 interface IAdminDashboardProps extends RouteComponentProps {}
 
 // const GET_ALL_PRODUCTS = gql`
-//   query($_websiteId: Int!) {
+//   query($_websiteEmailId: Int!) {
 //     mongodbGqlApi {
-//       layout(query: { websiteId: $_websiteId }) {
+//       layout(query: { websiteEmailId: $_websiteEmailId }) {
 //         layout {
 //           title
 //           description

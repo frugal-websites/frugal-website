@@ -7,18 +7,18 @@ import UserDashboard from "../UserDashboard/UserDashboard"
 
 type AppProps = {
   isAdmin: boolean
-  userEmail: string
+  websiteEmailId: string
 }
 
-const App = ({ isAdmin, userEmail }: AppProps) => {
-  console.log("APP_UserEmail", userEmail)
+const App = ({ isAdmin, websiteEmailId }: AppProps) => {
+  console.log("APP_UserEmail", websiteEmailId)
   return isAdmin ? (
     <Router>
       <AdminDashboard path="/app" />
     </Router>
   ) : (
     <Router>
-      <UserDashboard path="/app" userEmail={userEmail} />
+      <UserDashboard path="/app" websiteEmailId={websiteEmailId} />
       <Profile path="/app/profile" />
     </Router>
   )
