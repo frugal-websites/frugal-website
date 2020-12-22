@@ -39,7 +39,9 @@ const AppLayout = (props: AppLayoutProps) => {
   return (
     <Box className={classes.root}>
       <NavBar navLinks={navLinks} />
-      <Box className={classes.content}>{props.children}</Box>
+      <Container maxWidth="lg">
+        <Box className={classes.content}>{props.children}</Box>
+      </Container>
     </Box>
   )
 }
