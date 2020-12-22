@@ -59,11 +59,11 @@ const useStyles = makeStyles({
   },
 })
 
-interface IAppNavBarProps {
+interface INavBarProps {
   navLinks: INavLinkValue[]
 }
 
-const NavBar: React.FunctionComponent<IAppNavBarProps> = ({ navLinks }) => {
+const NavBar: React.FunctionComponent<INavBarProps> = ({ navLinks }) => {
   const classes = useStyles()
 
   const getLogStatusButton = (websiteEmailId: string) => {

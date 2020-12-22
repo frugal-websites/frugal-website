@@ -13,8 +13,9 @@ import { makeStyles, fade } from "@material-ui/core/styles"
 import { Menu, Close, Home } from "@material-ui/icons"
 import { navigate } from "gatsby"
 import React, { useState, Fragment } from "react"
-import { INavLinkValue } from "../../app/AppLayout/AppLayout"
+import { INavLinkValue } from "../../common/NavBar/NavBar"
 
+// TODO revoir links du sidedrawer: https://material-ui.com/components/lists/#simple-list
 // https://www.color-hex.com/color-palette/17154
 
 const goldYellow: string = "#ffc900"

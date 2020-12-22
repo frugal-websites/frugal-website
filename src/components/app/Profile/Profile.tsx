@@ -85,11 +85,12 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: `flex-start`,
       flexFlow: `column wrap`,
       "& > label": {
-        marginTop: theme.spacing(4),
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(1),
       },
     },
     formInput: {
-      marginLeft: theme.spacing(2),
+      // marginLeft: theme.spacing(1),
     },
     submitBox: {
       marginTop: theme.spacing(4),
@@ -133,7 +134,6 @@ const Profile: React.FunctionComponent<IProfileProps> = ({}: IProfileProps) => {
   >(GET_WEBSITE_DATA, {
     variables: { websiteEmailId },
     onCompleted: data => {
-      console.log("DATA LOG", data)
       reset(data.website)
     },
   })
@@ -148,12 +148,9 @@ const Profile: React.FunctionComponent<IProfileProps> = ({}: IProfileProps) => {
   })
 
   const onSubmit = (formData: IFormInput) => {
-    console.log(formData)
     updateWebsiteData({
       variables: { websiteEmailId, formData },
     })
-
-    console.log("MutationData", mutationData)
   }
 
   if (queryLoading)
@@ -191,6 +188,9 @@ const Profile: React.FunctionComponent<IProfileProps> = ({}: IProfileProps) => {
               name="websiteEmailId"
               control={control}
               className={classes.formInput}
+              InputProps={{
+                readOnly: true,
+              }}
             />
 
             <label>Notification Email</label>

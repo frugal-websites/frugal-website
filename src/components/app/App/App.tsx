@@ -4,6 +4,7 @@ import Profile from "../Profile/Profile"
 
 import AdminDashboard from "../AdminDashboard/AdminDashboard"
 import UserDashboard from "../UserDashboard/UserDashboard"
+import EditPage from "../EditPage/EditPage"
 
 type AppProps = {
   isAdmin: boolean
@@ -19,6 +20,7 @@ const App = ({ isAdmin, websiteEmailId }: AppProps) => {
   ) : (
     <Router id="reach-router-focus-wrapper">
       <UserDashboard path="/app" websiteEmailId={websiteEmailId} />
+      <EditPage path="/app/edit" />
       <Profile path="/app/profile" />
     </Router>
   )

@@ -5,17 +5,16 @@
  * See: https://www.gatsbyjs.com/docs/use-static-query/
  */
 
-import React, { Fragment } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import NavBar, { INavLinkValue } from "../../common/NavBar/NavBar"
-import { Box, Container, Typography } from "@material-ui/core"
+import { Box } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 const navLinks: INavLinkValue[] = [
   { name: `Dashboard`, path: `/app` },
+  { name: `Edit`, path: `/app/edit` },
   { name: `Profile`, path: `/app/profile` },
-  { name: `Fr`, path: `/app/fr` },
-  { name: `En`, path: `/app/en` },
 ]
 
 const useStyles = makeStyles({
@@ -39,9 +38,7 @@ const AppLayout = (props: AppLayoutProps) => {
   return (
     <Box className={classes.root}>
       <NavBar navLinks={navLinks} />
-      <Container maxWidth="lg">
-        <Box className={classes.content}>{props.children}</Box>
-      </Container>
+      <Box className={classes.content}>{props.children}</Box>
     </Box>
   )
 }
