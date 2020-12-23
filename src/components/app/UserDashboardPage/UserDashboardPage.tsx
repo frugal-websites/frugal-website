@@ -2,12 +2,12 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import AppLayout from "../AppLayout/AppLayout"
 
-interface IUserDashboardProps extends RouteComponentProps {
+interface IUserDashboardPageProps extends RouteComponentProps {
   websiteEmailId: string
 }
 
-const UserDashboard: React.FunctionComponent<IUserDashboardProps> = (
-  props: IUserDashboardProps
+const UserDashboardPage: React.FunctionComponent<IUserDashboardPageProps> = (
+  props: IUserDashboardPageProps
 ) => {
   return (
     <AppLayout>
@@ -23,4 +23,4 @@ const UserDashboard: React.FunctionComponent<IUserDashboardProps> = (
     </AppLayout>
   )
 }
-export default UserDashboard
+export default UserDashboardPage

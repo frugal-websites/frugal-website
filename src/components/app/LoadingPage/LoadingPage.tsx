@@ -12,9 +12,9 @@ const useStyles = makeStyles({
   },
 })
 
-interface IProfileProps {}
+interface ILoadingPageProps {}
 
-const LoadingPage: React.FunctionComponent<IProfileProps> = ({}: IProfileProps) => {
+const LoadingPage: React.FunctionComponent<ILoadingPageProps> = ({}: ILoadingPageProps) => {
   const classes = useStyles()
 
   return (

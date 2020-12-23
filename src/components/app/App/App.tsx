@@ -1,10 +1,10 @@
 import React from "react"
 import { Router } from "@reach/router"
-import Profile from "../Profile/Profile"
 
 import AdminDashboard from "../AdminDashboard/AdminDashboard"
-import UserDashboard from "../UserDashboard/UserDashboard"
 import EditPage from "../EditPage/EditPage"
+import UserDashboardPage from "../UserDashboardPage/UserDashboardPage"
+import ProfilePage from "../ProfilePage/ProfilePage"
 
 type AppProps = {
   isAdmin: boolean
@@ -19,9 +19,9 @@ const App = ({ isAdmin, websiteEmailId }: AppProps) => {
     </Router>
   ) : (
     <Router id="reach-router-focus-wrapper">
-      <UserDashboard path="/app" websiteEmailId={websiteEmailId} />
+      <UserDashboardPage path="/app" websiteEmailId={websiteEmailId} />
       <EditPage path="/app/edit" />
-      <Profile path="/app/profile" />
+      <ProfilePage path="/app/profile" />
     </Router>
   )
 }

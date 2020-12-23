@@ -117,9 +117,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-interface IProfileProps extends RouteComponentProps {}
+interface IProfilePageProps extends RouteComponentProps {}
 
-const Profile: React.FunctionComponent<IProfileProps> = ({}: IProfileProps) => {
+const ProfilePage: React.FunctionComponent<IProfilePageProps> = ({}: IProfilePageProps) => {
   const classes = useStyles()
 
   const websiteEmailId = useContext(WebsiteEmailIdContext)
@@ -263,4 +263,4 @@ const Profile: React.FunctionComponent<IProfileProps> = ({}: IProfileProps) => {
   )
 }
 
-export default Profile
+export default ProfilePage
