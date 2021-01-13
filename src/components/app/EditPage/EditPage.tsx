@@ -4,6 +4,8 @@ import AppLayout from "../AppLayout/AppLayout"
 import SideBar, { ISectionValue } from "../../common/SideBar/SideBar"
 import { MoveToInbox as InboxIcon } from "@material-ui/icons"
 import { Box } from "@material-ui/core"
+import RichTextEditor from "../RichTextEditor/RichTextEditor"
+import EditContentSection from "../EditContentSection/EditContentSection"
 
 interface IEditPageProps extends RouteComponentProps {}
 
@@ -34,7 +36,7 @@ const EditPage: React.FunctionComponent<IEditPageProps> = (
       >
         <Box>
           {activeSection && activeSection === `Content` && (
-            <h1>Welcome to Content section.</h1>
+            <EditContentSection />
           )}
           {activeSection && activeSection === `Style` && (
             <h1>Welcome to Style section.</h1>

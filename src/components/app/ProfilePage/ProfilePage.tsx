@@ -19,6 +19,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { green } from "@material-ui/core/colors"
 import clsx from "clsx"
 import ErrorPage from "../ErrorPage/ErrorPage"
+import LoadingButton from "../../common/LoadingButton/LoadingButton"
 
 interface IGetWebsiteData {
   website: IFormInput
@@ -92,27 +93,9 @@ const useStyles = makeStyles((theme: Theme) =>
     formInput: {
       // marginLeft: theme.spacing(1),
     },
-    submitBox: {
+    saveButtonBox: {
       marginTop: theme.spacing(4),
-      position: `relative`,
-      display: `inline-block`,
       alignSelf: `center`,
-    },
-    submitSuccess: {
-      display: `inline-block`,
-      backgroundColor: green[500],
-      "&:hover": {
-        backgroundColor: green[700],
-      },
-    },
-    submitProgress: {
-      display: `inline-block`,
-      color: green[500],
-      position: `absolute`,
-      top: `50%`,
-      left: `50%`,
-      marginTop: -12,
-      marginLeft: -12,
     },
   })
 )
@@ -122,7 +105,7 @@ interface IProfilePageProps extends RouteComponentProps {}
 const ProfilePage: React.FunctionComponent<IProfilePageProps> = ({}: IProfilePageProps) => {
   const classes = useStyles()
 
-  const websiteEmailId = useContext(WebsiteEmailIdContext)
+  const websiteEmailId: string = useContext(WebsiteEmailIdContext)
 
   const { handleSubmit, reset, control } = useForm<IFormInput>({
     defaultValues,
@@ -142,10 +125,6 @@ const ProfilePage: React.FunctionComponent<IProfilePageProps> = ({}: IProfilePag
     updateWebsiteData,
     { loading: mutationLoading, error: mutationError, data: mutationData },
   ] = useMutation<{}, IUpdateWebsiteVars>(UPDATE_WEBSITE_DATA)
-
-  const submitClassname = clsx({
-    [classes.submitSuccess]: !mutationError,
-  })
 
   const onSubmit = (formData: IFormInput) => {
     updateWebsiteData({
@@ -239,22 +218,12 @@ const ProfilePage: React.FunctionComponent<IProfilePageProps> = ({}: IProfilePag
               }
             />
 
-            <Box className={classes.submitBox}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={submitClassname}
-                disabled={mutationLoading}
-              >
-                Save
-              </Button>
-              {mutationLoading && (
-                <CircularProgress
-                  size={24}
-                  className={classes.submitProgress}
-                />
-              )}
+            <Box className={classes.saveButtonBox}>
+              <LoadingButton
+                displayName={"Save"}
+                isLoading={mutationLoading}
+                isError={mutationError}
+              />
             </Box>
           </Box>
         </form>

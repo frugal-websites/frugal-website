@@ -5,6 +5,12 @@ import WebsiteLayout from "../components/website/WebsiteLayout/WebsiteLayout"
 
 import Image from "../components/Image"
 import SEO from "../components/Seo"
+import RichTextEditor from "../components/app/RichTextEditor/RichTextEditor"
+
+import {
+  AmplifyS3TextPicker,
+  AmplifyS3ImagePicker,
+} from "@aws-amplify/ui-react"
 
 const IndexPage = () => (
   <WebsiteLayout>
@@ -17,6 +23,11 @@ const IndexPage = () => (
     </div>
     <br />
     <Link to="/mainPage/">Go to Main Page</Link>
+
+    <RichTextEditor />
+    <AmplifyS3TextPicker />
+
+    <AmplifyS3ImagePicker />
   </WebsiteLayout>
 )
 
