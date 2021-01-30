@@ -12,7 +12,6 @@ type AppProps = {
 }
 
 const App = ({ isAdmin, websiteEmailId }: AppProps) => {
-  console.log("APP_UserEmail", websiteEmailId)
   return isAdmin ? (
     <Router>
       <AdminDashboard path="/app" />
