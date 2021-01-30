@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useRef } from "react"
 import { WebsiteEmailIdContext } from "../WebsiteEmailIdProvider/WebsiteEmailIdProvider"
 import { RouteComponentProps } from "@reach/router"
 import {
@@ -95,9 +95,12 @@ interface IEditContentSectionProps {}
 const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({}: IEditContentSectionProps) => {
   const classes = useStyles()
 
+  type RichTextEditornHandle = React.ElementRef<typeof RichTextEditor>
+  const childRef = useRef<RichTextEditornHandle>(null)
+
   const websiteEmailId: string = useContext(WebsiteEmailIdContext)
 
-  const { handleSubmit, reset, control } = useForm<IFormInput>({
+  const { handleSubmit, reset, control, setValue } = useForm<IFormInput>({
     defaultValues,
   })
 
@@ -107,12 +110,15 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
   >(GET_LAYOUT_DATA, {
     variables: { websiteEmailId },
     onCompleted: data => {
-      console.log("DATA 1212", data)
-      console.log("websiteEmailId 1212", websiteEmailId)
-      // TODO complete le format des valeur attendues dans le form
+      // Need to make sure reset is finished before resetting RichTextEditors values.
+      // https://github.com/react-hook-form/react-hook-form/discussions/2746
+      const resetForm = async (data: any) => await reset(data)
+      resetForm(data.layout)
 
-      reset(data.layout)
-      console.log("data.layout", data.layout)
+      const formEditorStateFromDatabase: string =
+        data.layout.testRichTextEditorContent
+
+      childRef.current?.initEditorState(formEditorStateFromDatabase)
     },
   })
 
@@ -157,6 +163,8 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
             render={({ value, onChange }) => {
               return (
                 <RichTextEditor
+                  // Adding this ref breaks the links thing
+                  ref={childRef}
                   formEditorState={value}
                   formOnChange={onChange}
                 />
@@ -171,6 +179,16 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
               isError={mutationError}
             />
           </Box>
+
+          {/* <Button
+            variant="outlined"
+            onClick={() => {
+              childRef.current?.initEditorState("aaa")
+            }}
+            color="secondary"
+          >
+            Trigger initEditorState
+          </Button> */}
         </Box>
       </form>
     </Box>

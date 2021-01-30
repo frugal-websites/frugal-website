@@ -4,6 +4,7 @@ import React, {
   useEffect,
   Fragment,
   ReactElement,
+  useImperativeHandle,
 } from "react"
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
@@ -109,30 +110,51 @@ interface IRichTextEditorProps {
   formOnChange: (value: string) => void
 }
 
-const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
-  props: IRichTextEditorProps
-) => {
-  // const websiteEmailId = useContext(WebsiteEmailIdContext)
+export interface IRichTextEditorHandle {
+  initEditorState: (data: string) => void
+}
 
-  // Draft-JS editor configuration
+const RichTextEditor: React.ForwardRefRenderFunction<
+  IRichTextEditorHandle,
+  IRichTextEditorProps
+> = (props, ref) => {
+  const getInitialEditorState = (formEditorStateFromDatabase?: string) => {
+    let formEditorState: string | undefined = props.formEditorState
+    if (formEditorStateFromDatabase) {
+      formEditorState = formEditorStateFromDatabase
+    } else if (props.formEditorState) {
+      formEditorState = props.formEditorState
+    }
 
-  const getInitialEditorState = () => {
-    console.log("getInitialEditorState formEditorState", props.formEditorState)
-    console.log("getInitialEditorState formEditorState", props.formOnChange)
-    if (!props.formEditorState) {
+    if (!formEditorState) {
       return EditorState.createEmpty()
     }
 
-    const rawContentFromStore = convertFromRaw(
-      JSON.parse(props.formEditorState)
-    )
-    return EditorState.createWithContent(rawContentFromStore)
+    // TODO add try catch
+    const jsonParsed = JSON.parse(formEditorState)
+    const rawContentFromStored = convertFromRaw(jsonParsed)
+    return EditorState.createWithContent(rawContentFromStored)
   }
 
-  const [editorState, setEditorState] = useState(() => getInitialEditorState())
+  // TODO maybe no need for getInitialEditorState() here
+  // () => getInitialEditorState()
+  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+
+  const initEditorState = (formEditorStateFromDatabase?: string) => {
+    const editorState: EditorState = getInitialEditorState(
+      formEditorStateFromDatabase
+    )
+
+    setEditorState(getInitialEditorState(formEditorStateFromDatabase))
+  }
+
+  useImperativeHandle(ref, () => ({
+    initEditorState: initEditorState,
+  }))
 
   // See Dynamic focus of https://stackoverflow.com/questions/28889826/how-to-set-focus-on-an-input-field-after-rendering
-  const editor = useRef<Editor>()
+
+  // const editor = useRef<Editor>()
 
   const onChange = (value: EditorState): void => {
     setEditorState(value)
@@ -146,21 +168,22 @@ const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
     }
   }
 
-  const focusEditor = () => {
-    editor.current && editor.current.focus()
-  }
+  // const focusEditor = () => {
+  //   editor.current && editor.current.focus()
+  // }
 
+  // on div editor : onClick={focusEditor}
   return (
     <div>
-      <div className={editorStyles.editor} onClick={focusEditor}>
+      <div className={editorStyles.editor}>
         <Editor
           editorState={editorState}
           onChange={onChange}
           plugins={plugins}
-          ref={element => {
-            // @ts-ignore
-            editor.current = element
-          }}
+          // ref={element => {
+          //   // @ts-ignore
+          //   editor.current = element
+          // }}
         />
         {/* <Box className={classes.toolbar}> */}
         <Toolbar>
@@ -200,4 +223,4 @@ const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
   )
 }
 
-export default RichTextEditor
+export default React.forwardRef(RichTextEditor)
