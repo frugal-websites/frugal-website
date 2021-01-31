@@ -16,6 +16,7 @@ import {
   ContentState,
   convertToRaw,
   convertFromRaw,
+  CompositeDecorator,
 } from "draft-js"
 import Editor from "@draft-js-plugins/editor"
 
@@ -54,6 +55,7 @@ import {
   createBlockStyleButton,
 } from "@draft-js-plugins/buttons"
 import LoadingButton from "../../common/LoadingButton/LoadingButton"
+import _ from "lodash"
 
 // https://github.com/draft-js-plugins/draft-js-plugins/blob/master/packages/buttons/src/components/HeadlineOneButton.tsx
 const TitleButton = createBlockStyleButton({
@@ -99,6 +101,7 @@ const linkifyPlugin = createLinkifyPlugin({
   theme: { link: linkifyStyles.link } as LinkifyPluginTheme,
 })
 
+// TODO move inside Functional Component : https://github.com/draft-js-plugins/draft-js-plugins/issues/1244
 const plugins = [staticToolbarPlugin, linkifyPlugin, linkPlugin] // , linkPlugin
 const text =
   "The toolbar above the editor can be used for formatting text, as in conventional static editors  …"
@@ -136,25 +139,62 @@ const RichTextEditor: React.ForwardRefRenderFunction<
     return EditorState.createWithContent(rawContentFromStored)
   }
 
+  const [isFirstRender, setIsFirstRender] = useState(true)
+
   // TODO maybe no need for getInitialEditorState() here
   // () => getInitialEditorState()
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
-  const initEditorState = (formEditorStateFromDatabase?: string) => {
-    const editorState: EditorState = getInitialEditorState(
-      formEditorStateFromDatabase
-    )
+  // TODO try to remove this and keep source if needed in future
+  const [remountKey, setRemountKey] = useState(1)
 
+  const editor = useRef<Editor>()
+
+  useEffect(() => {
+    // TODO: review this might be problematic
+    // See source: https://github.com/draft-js-plugins/draft-js-plugins/issues/982
+    // https://github.com/draft-js-plugins/draft-js-plugins/issues/491
+    if (editorState && !editorState.getDecorator()) {
+      console.log("editorState && !editorState.getDecorator()")
+      const newValue = remountKey + 1
+      setRemountKey(newValue)
+    }
+  }, [editorState])
+
+  useEffect(() => {
+    // TODO: review this might be problematic
+    if (props.formEditorState && isFirstRender) {
+      const decorators = _.flattenDeep(
+        plugins.map(plugin => plugin.decorators).filter(item => item)
+      )
+      const decorator = new CompositeDecorator(
+        // @ts-ignore
+        decorators.filter((decorator, index) => index !== 1)
+      )
+
+      if (props.formEditorState) {
+        setEditorState(
+          EditorState.createWithContent(
+            convertFromRaw(JSON.parse(props.formEditorState)),
+            decorator
+          )
+        )
+      }
+      setIsFirstRender(false)
+    }
+  }, [props.formEditorState])
+
+  const initEditorState = (formEditorStateFromDatabase?: string) => {
     setEditorState(getInitialEditorState(formEditorStateFromDatabase))
+    // editor.current?.
   }
 
+  // TODO remove this
   useImperativeHandle(ref, () => ({
     initEditorState: initEditorState,
   }))
 
   // See Dynamic focus of https://stackoverflow.com/questions/28889826/how-to-set-focus-on-an-input-field-after-rendering
-
-  // const editor = useRef<Editor>()
 
   const onChange = (value: EditorState): void => {
     setEditorState(value)
@@ -177,13 +217,14 @@ const RichTextEditor: React.ForwardRefRenderFunction<
     <div>
       <div className={editorStyles.editor}>
         <Editor
+          key={remountKey}
           editorState={editorState}
           onChange={onChange}
           plugins={plugins}
-          // ref={element => {
-          //   // @ts-ignore
-          //   editor.current = element
-          // }}
+          ref={element => {
+            // @ts-ignore
+            editor.current = element
+          }}
         />
         {/* <Box className={classes.toolbar}> */}
         <Toolbar>

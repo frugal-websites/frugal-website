@@ -110,15 +110,17 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
   >(GET_LAYOUT_DATA, {
     variables: { websiteEmailId },
     onCompleted: data => {
+      console.log("GETTING DATA FROM DB")
       // Need to make sure reset is finished before resetting RichTextEditors values.
       // https://github.com/react-hook-form/react-hook-form/discussions/2746
       const resetForm = async (data: any) => await reset(data)
       resetForm(data.layout)
 
-      const formEditorStateFromDatabase: string =
-        data.layout.testRichTextEditorContent
+      // TODO clear this [REMOVE ALL REF STUFF]
+      // const formEditorStateFromDatabase: string =
+      //   data.layout.testRichTextEditorContent
 
-      childRef.current?.initEditorState(formEditorStateFromDatabase)
+      // childRef.current?.initEditorState(formEditorStateFromDatabase)
     },
   })
 
@@ -163,7 +165,7 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
             render={({ value, onChange }) => {
               return (
                 <RichTextEditor
-                  // Adding this ref breaks the links thing
+                  // TODO remove this: Adding this ref breaks the links thing
                   ref={childRef}
                   formEditorState={value}
                   formOnChange={onChange}
@@ -179,11 +181,11 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
               isError={mutationError}
             />
           </Box>
-
+          {/* TODO remove this */}
           {/* <Button
             variant="outlined"
             onClick={() => {
-              childRef.current?.initEditorState("aaa")
+              childRef.current?.initEditorState()
             }}
             color="secondary"
           >
