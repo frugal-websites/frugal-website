@@ -107,7 +107,6 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
   >(GET_LAYOUT_DATA, {
     variables: { websiteEmailId },
     onCompleted: data => {
-      console.log("GETTING DATA FROM DB")
       // Need to make sure reset is finished before resetting RichTextEditors values.
       // https://github.com/react-hook-form/react-hook-form/discussions/2746
       const resetForm = async (data: any) => await reset(data)
@@ -121,7 +120,6 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
   ] = useMutation<{}, IUpdateLayoutVars>(UPDATE_LAYOUT_DATA)
 
   const onSubmit = (formData: IFormInput) => {
-    console.log("FORM DATA", formData)
     updateLayoutData({
       variables: { websiteEmailId, formData },
     })

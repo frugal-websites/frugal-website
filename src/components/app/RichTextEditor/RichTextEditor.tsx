@@ -48,38 +48,14 @@ import {
 import _ from "lodash"
 import { SubSubTitleButton, SubTitleButton, TitleButton } from "./CustomButtons"
 
-// TODO
-// - add other options (headers link etc)
-// - see format of received content
-// - finish css (pale + size take full width and height of parent div)
-// - pass as prop default message
-// - link to hook-form
-
-const staticToolbarPlugin = createToolbarPlugin({
-  // @ts-ignore
-  theme: { buttonStyles, toolbarStyles },
-})
-const { Toolbar } = staticToolbarPlugin
-
-const linkPlugin = createLinkPlugin({
-  // TODO FIX THIS ERROR
-  theme: {
-    input: linkStyles.input,
-    link: linkStyles.link,
-    inputInvalid: linkStyles.inputInvalid,
-  },
-  placeholder: "http://…",
-})
-
-const linkifyPlugin = createLinkifyPlugin({
-  target: "_blank",
-  theme: { link: linkifyStyles.link } as LinkifyPluginTheme,
-})
-
 // TODO move inside Functional Component : https://github.com/draft-js-plugins/draft-js-plugins/issues/1244
-const plugins = [staticToolbarPlugin, linkifyPlugin, linkPlugin] // , linkPlugin
+//const plugins = [staticToolbarPlugin, linkifyPlugin] // , linkPlugin
 
 // TODO https://www.npmjs.com/package/draft-js:  Because Draft.js supports unicode, you must have the following meta tag in the <head> </head> block of your HTML file:
+
+// remountKey solution when loosing decorators
+// See source: https://github.com/draft-js-plugins/draft-js-plugins/issues/982
+// https://github.com/draft-js-plugins/draft-js-plugins/issues/491
 
 interface IRichTextEditorProps {
   formEditorState: string
@@ -89,24 +65,37 @@ interface IRichTextEditorProps {
 const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
   props: IRichTextEditorProps
 ) => {
+  const [{ plugins, Toolbar }] = useState(() => {
+    const staticToolbarPlugin = createToolbarPlugin({
+      // @ts-ignore
+      theme: { buttonStyles, toolbarStyles },
+    })
+
+    const linkPlugin = createLinkPlugin({
+      theme: {
+        input: linkStyles.input,
+        link: linkStyles.link,
+        inputInvalid: linkStyles.inputInvalid,
+      },
+      placeholder: "http://…",
+    })
+
+    const linkifyPlugin = createLinkifyPlugin({
+      target: "_blank",
+      theme: { link: linkifyStyles.link } as LinkifyPluginTheme,
+    })
+    const { Toolbar } = staticToolbarPlugin
+    const plugins = [staticToolbarPlugin, linkifyPlugin] // linkPlugin
+    return {
+      plugins,
+      Toolbar,
+    }
+  })
+
   const [isFirstRender, setIsFirstRender] = useState(true)
 
   // TODO maybe no need for getInitialEditorState() here
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
-
-  // TODO try to remove this and keep source if needed in future
-  const [remountKey, setRemountKey] = useState(1)
-
-  useEffect(() => {
-    // TODO: review this might be problematic
-    // See source: https://github.com/draft-js-plugins/draft-js-plugins/issues/982
-    // https://github.com/draft-js-plugins/draft-js-plugins/issues/491
-    if (editorState && !editorState.getDecorator()) {
-      console.log("editorState && !editorState.getDecorator()")
-      const newValue = remountKey + 1
-      setRemountKey(newValue)
-    }
-  }, [editorState])
 
   useEffect(() => {
     // TODO: review this might be problematic
@@ -114,9 +103,10 @@ const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
       const decorators = _.flattenDeep(
         plugins.map(plugin => plugin.decorators).filter(item => item)
       )
+      console.log("decorators", decorators)
       const decorator = new CompositeDecorator(
         // @ts-ignore
-        decorators.filter((decorator, index) => index !== 1)
+        decorators
       )
 
       if (props.formEditorState) {
@@ -148,7 +138,6 @@ const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
     <div>
       <div className={editorStyles.editor}>
         <Editor
-          key={remountKey}
           editorState={editorState}
           onChange={onChange}
           plugins={plugins}
@@ -163,7 +152,7 @@ const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
               <UnorderedListButton {...externalProps} />
               <OrderedListButton {...externalProps} />
               <BlockquoteButton {...externalProps} />
-              <linkPlugin.LinkButton {...externalProps} />
+              {/* <linkPlugin.LinkButton {...externalProps} /> */}
               <TitleButton {...externalProps} />
               <SubTitleButton {...externalProps} />
               <SubSubTitleButton {...externalProps} />
