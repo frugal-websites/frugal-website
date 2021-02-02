@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  Fragment,
-  ReactElement,
-  useImperativeHandle,
-} from "react"
+import React, { useState, useEffect, Fragment } from "react"
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Box, Button } from "@material-ui/core"
@@ -13,16 +6,14 @@ import buttonStyles from "./buttonStyles.module.scss"
 
 import {
   EditorState,
-  ContentState,
   convertToRaw,
   convertFromRaw,
   CompositeDecorator,
 } from "draft-js"
+
 import Editor from "@draft-js-plugins/editor"
 
-import createToolbarPlugin, {
-  Separator,
-} from "@draft-js-plugins/static-toolbar"
+import createToolbarPlugin from "@draft-js-plugins/static-toolbar"
 
 import createLinkPlugin from "@draft-js-plugins/anchor"
 
@@ -54,24 +45,8 @@ import {
   // SupButton,
   createBlockStyleButton,
 } from "@draft-js-plugins/buttons"
-import LoadingButton from "../../common/LoadingButton/LoadingButton"
 import _ from "lodash"
-
-// https://github.com/draft-js-plugins/draft-js-plugins/blob/master/packages/buttons/src/components/HeadlineOneButton.tsx
-const TitleButton = createBlockStyleButton({
-  blockType: "header-one",
-  children: "Title",
-})
-
-const SubTitleButton = createBlockStyleButton({
-  blockType: "header-two",
-  children: "SubTitle",
-})
-
-const SubSubTitleButton = createBlockStyleButton({
-  blockType: "header-three",
-  children: "Sub-SubTitle",
-})
+import { SubSubTitleButton, SubTitleButton, TitleButton } from "./CustomButtons"
 
 // TODO
 // - add other options (headers link etc)
@@ -103,8 +78,6 @@ const linkifyPlugin = createLinkifyPlugin({
 
 // TODO move inside Functional Component : https://github.com/draft-js-plugins/draft-js-plugins/issues/1244
 const plugins = [staticToolbarPlugin, linkifyPlugin, linkPlugin] // , linkPlugin
-const text =
-  "The toolbar above the editor can be used for formatting text, as in conventional static editors  …"
 
 // TODO https://www.npmjs.com/package/draft-js:  Because Draft.js supports unicode, you must have the following meta tag in the <head> </head> block of your HTML file:
 
@@ -113,42 +86,16 @@ interface IRichTextEditorProps {
   formOnChange: (value: string) => void
 }
 
-export interface IRichTextEditorHandle {
-  initEditorState: (data: string) => void
-}
-
-const RichTextEditor: React.ForwardRefRenderFunction<
-  IRichTextEditorHandle,
-  IRichTextEditorProps
-> = (props, ref) => {
-  const getInitialEditorState = (formEditorStateFromDatabase?: string) => {
-    let formEditorState: string | undefined = props.formEditorState
-    if (formEditorStateFromDatabase) {
-      formEditorState = formEditorStateFromDatabase
-    } else if (props.formEditorState) {
-      formEditorState = props.formEditorState
-    }
-
-    if (!formEditorState) {
-      return EditorState.createEmpty()
-    }
-
-    // TODO add try catch
-    const jsonParsed = JSON.parse(formEditorState)
-    const rawContentFromStored = convertFromRaw(jsonParsed)
-    return EditorState.createWithContent(rawContentFromStored)
-  }
-
+const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = (
+  props: IRichTextEditorProps
+) => {
   const [isFirstRender, setIsFirstRender] = useState(true)
 
   // TODO maybe no need for getInitialEditorState() here
-  // () => getInitialEditorState()
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
   // TODO try to remove this and keep source if needed in future
   const [remountKey, setRemountKey] = useState(1)
-
-  const editor = useRef<Editor>()
 
   useEffect(() => {
     // TODO: review this might be problematic
@@ -184,18 +131,7 @@ const RichTextEditor: React.ForwardRefRenderFunction<
     }
   }, [props.formEditorState])
 
-  const initEditorState = (formEditorStateFromDatabase?: string) => {
-    setEditorState(getInitialEditorState(formEditorStateFromDatabase))
-    // editor.current?.
-  }
-
-  // TODO remove this
-  useImperativeHandle(ref, () => ({
-    initEditorState: initEditorState,
-  }))
-
   // See Dynamic focus of https://stackoverflow.com/questions/28889826/how-to-set-focus-on-an-input-field-after-rendering
-
   const onChange = (value: EditorState): void => {
     setEditorState(value)
 
@@ -208,11 +144,6 @@ const RichTextEditor: React.ForwardRefRenderFunction<
     }
   }
 
-  // const focusEditor = () => {
-  //   editor.current && editor.current.focus()
-  // }
-
-  // on div editor : onClick={focusEditor}
   return (
     <div>
       <div className={editorStyles.editor}>
@@ -221,10 +152,6 @@ const RichTextEditor: React.ForwardRefRenderFunction<
           editorState={editorState}
           onChange={onChange}
           plugins={plugins}
-          ref={element => {
-            // @ts-ignore
-            editor.current = element
-          }}
         />
         {/* <Box className={classes.toolbar}> */}
         <Toolbar>
@@ -246,7 +173,7 @@ const RichTextEditor: React.ForwardRefRenderFunction<
         {/* </Box> */}
       </div>
 
-      <Button
+      {/* <Button
         variant="outlined"
         onClick={() => {
           console.log(
@@ -259,9 +186,9 @@ const RichTextEditor: React.ForwardRefRenderFunction<
         }}
       >
         Log Editor State
-      </Button>
+      </Button> */}
     </div>
   )
 }
 
-export default React.forwardRef(RichTextEditor)
+export default RichTextEditor

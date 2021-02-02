@@ -95,16 +95,13 @@ interface IEditContentSectionProps {}
 const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({}: IEditContentSectionProps) => {
   const classes = useStyles()
 
-  type RichTextEditornHandle = React.ElementRef<typeof RichTextEditor>
-  const childRef = useRef<RichTextEditornHandle>(null)
-
   const websiteEmailId: string = useContext(WebsiteEmailIdContext)
 
-  const { handleSubmit, reset, control, setValue } = useForm<IFormInput>({
+  const { handleSubmit, reset, control } = useForm<IFormInput>({
     defaultValues,
   })
 
-  const { loading: queryLoading, error: queryError, data } = useQuery<
+  const { loading: queryLoading, error: queryError } = useQuery<
     IGetLayoutData,
     IGetLayoutVars
   >(GET_LAYOUT_DATA, {
@@ -115,12 +112,6 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
       // https://github.com/react-hook-form/react-hook-form/discussions/2746
       const resetForm = async (data: any) => await reset(data)
       resetForm(data.layout)
-
-      // TODO clear this [REMOVE ALL REF STUFF]
-      // const formEditorStateFromDatabase: string =
-      //   data.layout.testRichTextEditorContent
-
-      // childRef.current?.initEditorState(formEditorStateFromDatabase)
     },
   })
 
@@ -165,8 +156,6 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
             render={({ value, onChange }) => {
               return (
                 <RichTextEditor
-                  // TODO remove this: Adding this ref breaks the links thing
-                  ref={childRef}
                   formEditorState={value}
                   formOnChange={onChange}
                 />
@@ -181,16 +170,6 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
               isError={mutationError}
             />
           </Box>
-          {/* TODO remove this */}
-          {/* <Button
-            variant="outlined"
-            onClick={() => {
-              childRef.current?.initEditorState()
-            }}
-            color="secondary"
-          >
-            Trigger initEditorState
-          </Button> */}
         </Box>
       </form>
     </Box>
