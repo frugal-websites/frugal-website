@@ -23,11 +23,6 @@ const IndexPage = () => (
     </div>
     <br />
     <Link to="/mainPage/">Go to Main Page</Link>
-
-    <RichTextEditor />
-    <AmplifyS3TextPicker />
-
-    <AmplifyS3ImagePicker />
   </WebsiteLayout>
 )
 
