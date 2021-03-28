@@ -23,8 +23,7 @@ import {
   AmplifyS3TextPicker,
   AmplifyS3ImagePicker,
 } from "@aws-amplify/ui-react"
-import { ImageUpload } from "../ImageUpload/ImageUpload"
-import S3ImageUpload from "../S3ImageUpload/S3ImageUpload"
+import ImageUpload from "../ImageUpload/ImageUpload"
 
 interface IGetLayoutData {
   layout: IFormInput
@@ -157,7 +156,18 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
       <form className={classes.formTag} onSubmit={handleSubmit(onSubmit)}>
         <Box className={classes.formWrapper}>
           <Box className={classes.imageTestWidthBox}>
-            <S3ImageUpload />
+            {/* <Controller
+              name="testImageUpload"
+              control={control}
+              render={({ value, onChange }) => {
+                return ( */}
+            <ImageUpload
+              formEditorState={"1222.jpg_bb7faa02-4eb2-4a76-a3d3-53a39c0d518a"}
+              formOnChange={null}
+            />
+            {/* )
+              }}
+            /> */}
           </Box>
 
           <label>Title</label>
@@ -181,13 +191,11 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
             }}
           />
 
-          <ImageUpload />
-
           <Box className={classes.saveButtonBox}>
             <LoadingButton
               displayName={"Save"}
               isLoading={mutationLoading}
-              isError={mutationError}
+              isError={mutationError != null}
             />
           </Box>
         </Box>
