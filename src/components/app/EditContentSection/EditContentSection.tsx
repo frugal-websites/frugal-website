@@ -19,6 +19,12 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import ErrorPage from "../ErrorPage/ErrorPage"
 import LoadingButton from "../../common/LoadingButton/LoadingButton"
 import RichTextEditor from "../RichTextEditor/RichTextEditor"
+import {
+  AmplifyS3TextPicker,
+  AmplifyS3ImagePicker,
+} from "@aws-amplify/ui-react"
+import { ImageUpload } from "../ImageUpload/ImageUpload"
+import S3ImageUpload from "../S3ImageUpload/S3ImageUpload"
 
 interface IGetLayoutData {
   layout: IFormInput
@@ -71,6 +77,9 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: `center`,
       flexFlow: `column wrap`,
     },
+    formTag: {
+      width: `100%`,
+    },
     formWrapper: {
       display: `flex`,
       alignItems: `flex-start`,
@@ -86,6 +95,10 @@ const useStyles = makeStyles((theme: Theme) =>
     saveButtonBox: {
       marginTop: theme.spacing(4),
       alignSelf: `center`,
+    },
+    imageTestWidthBox: {
+      width: `100%`,
+      height: `40vh`,
     },
   })
 )
@@ -125,21 +138,28 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
     })
   }
 
+  // if (queryError || mutationError) {
+  //   console.log("HERE")
+  //   console.log("queryError", queryError)
+  //   console.log(queryError)
+
+  //   console.log("mutationError", mutationError)
+  // }
+
   if (queryLoading) return <LoadingPage />
 
   if (queryError || mutationError) return <ErrorPage />
-
-  // if (queryError || mutationError) {
-  //   console.log("queryError", queryError)
-  //   console.log("mutationError", mutationError)
-  // }
 
   return (
     <Box className={classes.root}>
       <h1>Welcome to Content section.</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={classes.formTag} onSubmit={handleSubmit(onSubmit)}>
         <Box className={classes.formWrapper}>
+          <Box className={classes.imageTestWidthBox}>
+            <S3ImageUpload />
+          </Box>
+
           <label>Title</label>
           <Controller
             as={TextField}
@@ -160,6 +180,8 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
               )
             }}
           />
+
+          <ImageUpload />
 
           <Box className={classes.saveButtonBox}>
             <LoadingButton

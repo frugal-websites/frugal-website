@@ -35,30 +35,6 @@ export interface INavLinkValue {
   path: string
 }
 
-const useStyles = makeStyles({
-  root: {
-    display: `flex`,
-    justifyContent: `space-between`,
-    width: `100%`,
-    alignItems: `center`,
-    // margin: `0 0.5em`,
-  },
-  navDisplayFlex: {
-    display: `flex`,
-    justifyContent: `space-between`,
-  },
-  linkText: {
-    textDecoration: `none`,
-    color: `white`,
-  },
-  signOutBox: {
-    margin: `0.5em 1em`,
-  },
-  signUpBox: {
-    margin: `0.5em 1em`,
-  },
-})
-
 interface INavBarProps {
   navLinks: INavLinkValue[]
 }
@@ -127,5 +103,29 @@ const NavBar: React.FunctionComponent<INavBarProps> = ({ navLinks }) => {
     </WebsiteEmailIdContext.Consumer>
   )
 }
+
+const useStyles = makeStyles({
+  root: {
+    display: `flex`,
+    justifyContent: `space-between`,
+    width: `100%`,
+    alignItems: `center`,
+    // margin: `0 0.5em`,
+  },
+  navDisplayFlex: {
+    display: `flex`,
+    justifyContent: `space-between`,
+  },
+  linkText: {
+    textDecoration: `none`,
+    color: `white`,
+  },
+  signOutBox: {
+    margin: `0.5em 1em`,
+  },
+  signUpBox: {
+    margin: `0.5em 1em`,
+  },
+})
 
 export default NavBar

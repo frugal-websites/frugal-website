@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import Amplify from "aws-amplify"
+import Amplify, { Auth, Storage } from "aws-amplify"
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components"
 import awsconfig from "../../../aws-exports"
 import App from "../App/App"
@@ -12,8 +12,10 @@ import {
   responsiveFontSizes,
   MuiThemeProvider,
 } from "@material-ui/core"
+import { navigate } from "gatsby"
 
 Amplify.configure(awsconfig)
+Storage.configure({ level: "protected" })
 
 const AppWithAuth: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>()
@@ -26,8 +28,19 @@ const AppWithAuth: React.FunctionComponent = () => {
       console.log("nextAuthState", nextAuthState)
       console.log("authData", authData)
 
-      setAuthState(nextAuthState)
+      //setUser(authData)
       setUser(authData)
+
+      setAuthState(nextAuthState)
+
+      const getCreds = async () => {
+        const credentials = await Auth.currentUserCredentials()
+        console.log("identityId", credentials)
+        // TODO add credentials.identityId in user info, because if not can`t map cognito username
+        // to cognito identityId an can`t find which S3 buckets belongs to who
+        console.log("identityId", credentials.identityId)
+      }
+      getCreds()
     })
   }, [])
 

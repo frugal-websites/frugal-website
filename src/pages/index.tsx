@@ -7,11 +7,6 @@ import Image from "../components/Image"
 import SEO from "../components/Seo"
 import RichTextEditor from "../components/app/RichTextEditor/RichTextEditor"
 
-import {
-  AmplifyS3TextPicker,
-  AmplifyS3ImagePicker,
-} from "@aws-amplify/ui-react"
-
 const IndexPage = () => (
   <WebsiteLayout>
     <SEO title="Home" />

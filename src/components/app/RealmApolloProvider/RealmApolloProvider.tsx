@@ -8,6 +8,8 @@ import {
 } from "@apollo/client"
 import * as Realm from "realm-web"
 
+// TODO : sometimes uses oudated token saved (somehow) in cookies for auth. (/ le refreshCustomData ne semble pas fonctionner)
+
 // Get a valid Realm user access token to authenticate requests
 async function getValidAccessToken(app) {
   if (!app.currentUser) {
