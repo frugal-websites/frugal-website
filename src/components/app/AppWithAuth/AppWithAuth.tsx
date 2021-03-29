@@ -20,13 +20,15 @@ Storage.configure({ level: "protected" })
 const AppWithAuth: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>()
   const [user, setUser] = React.useState<object | undefined>()
+  const [identityId, setIdentityId] = React.useState<string>("")
+
   let theme = null
 
   React.useEffect(() => {
     onAuthUIStateChange((nextAuthState, authData) => {
-      console.log("onAuthUIStateChange HERE")
-      console.log("nextAuthState", nextAuthState)
-      console.log("authData", authData)
+      // console.log("onAuthUIStateChange HERE")
+      // console.log("nextAuthState", nextAuthState)
+      // console.log("authData", authData)
 
       //setUser(authData)
       setUser(authData)
@@ -35,10 +37,9 @@ const AppWithAuth: React.FunctionComponent = () => {
 
       const getCreds = async () => {
         const credentials = await Auth.currentUserCredentials()
-        console.log("identityId", credentials)
         // TODO add credentials.identityId in user info, because if not can`t map cognito username
         // to cognito identityId an can`t find which S3 buckets belongs to who
-        console.log("identityId", credentials.identityId)
+        setIdentityId(credentials.identityId)
       }
       getCreds()
     })
@@ -46,6 +47,7 @@ const AppWithAuth: React.FunctionComponent = () => {
 
   const isAdmin = () => {
     const userGroups =
+      // @ts-ignore
       user.signInUserSession.accessToken.payload["cognito:groups"]
 
     if (userGroups == null) {
@@ -60,6 +62,7 @@ const AppWithAuth: React.FunctionComponent = () => {
   }
 
   const getWebsiteId = () => {
+    // @ts-ignore
     return user.attributes.email
   }
 
@@ -73,7 +76,9 @@ const AppWithAuth: React.FunctionComponent = () => {
     <Fragment>
       <RealmAppProvider appId={process.env.GATSBY_REALM_APP_ID}>
         <RealmApolloProvider>
-          <WebsiteEmailIdContext.Provider value={getWebsiteId()}>
+          <WebsiteEmailIdContext.Provider
+            value={{ websiteEmailId: getWebsiteId(), identityId: identityId }}
+          >
             <MuiThemeProvider theme={getMuiTheme()}>
               <App isAdmin={isAdmin()} websiteEmailId={getWebsiteId()} />
             </MuiThemeProvider>

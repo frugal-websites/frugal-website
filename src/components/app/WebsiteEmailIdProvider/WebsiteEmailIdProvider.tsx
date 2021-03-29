@@ -1,3 +1,10 @@
 import React from "react"
 
-export const WebsiteEmailIdContext = React.createContext("")
+interface IWebsiteEmailIdProvider {
+  websiteEmailId: string
+  identityId: string
+}
+
+export const WebsiteEmailIdContext = React.createContext<
+  IWebsiteEmailIdProvider
+>({ websiteEmailId: "", identityId: "" })

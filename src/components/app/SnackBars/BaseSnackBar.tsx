@@ -62,7 +62,6 @@ interface IProps {
 
 const BaseSnackBar: React.FC<IBaseSnackBar> = (props: IBaseSnackBar) => {
   const classes = useStyles()
-  console.log(props.snackBarState.message)
   return (
     <Snackbar
       open={props.snackBarState.isOpen}

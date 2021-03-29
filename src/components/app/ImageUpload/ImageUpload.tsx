@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { Box, Button, CircularProgress, IconButton } from "@material-ui/core"
+import { WebsiteEmailIdContext } from "../WebsiteEmailIdProvider/WebsiteEmailIdProvider"
 import AddAPhotoSharpIcon from "@material-ui/icons/AddAPhotoSharp"
 import { v4 as uuid } from "uuid"
 import { Storage } from "aws-amplify"
@@ -19,7 +20,8 @@ import {
 } from "./ImageUploadMessages"
 
 interface IImageData {
-  name: string
+  nameDisplayed: string
+  nameWithId: string
 }
 
 interface IUploaderState {
@@ -31,7 +33,8 @@ interface IUploaderState {
 const initialUploaderState: IUploaderState = {
   fileURL: "",
   image: {
-    name: "",
+    nameDisplayed: "",
+    nameWithId: "",
   },
   saving: false,
 }
@@ -56,14 +59,16 @@ const ImageUpload: React.FunctionComponent<IImageUploadProps> = (
   const [snackBarState, setSnackBarState] = useState<ISnackBarState>(
     initialSnackBarState
   )
+  const identityId: string = useContext(WebsiteEmailIdContext).identityId
 
   useEffect(() => {
+    console.log("FORM EDITOR STATE", props.formEditorState)
     if (props.formEditorState && isFirstRender) {
       setUploaderState({ ...uploaderState, saving: true })
 
       const getImage = async () => {
         await Storage.get(props.formEditorState, {
-          identityId: "us-east-1:236b2a21-a9d2-4de2-b065-4048ab213e45",
+          identityId: identityId,
         })
           .then((signedURL: Object | string) => {
             let signedURLString =
@@ -71,10 +76,11 @@ const ImageUpload: React.FunctionComponent<IImageUploadProps> = (
 
             if (signedURLString) {
               const uploadedImage: IImageData = {
-                name: props.formEditorState.slice(
+                nameDisplayed: props.formEditorState.slice(
                   0,
                   -(UUID_STRING_LENGTH + IMAGE_FILE_NAME_UUID_SEPARATOR.length)
                 ),
+                nameWithId: props.formEditorState,
               }
 
               setUploaderState({
@@ -138,18 +144,18 @@ const ImageUpload: React.FunctionComponent<IImageUploadProps> = (
       return
     }
 
-    const image_name_saved = `${
+    const imageNameWithId = `${
       filesInput![0].name
     }${IMAGE_FILE_NAME_UUID_SEPARATOR}${uuid()}`
     const image_file = filesInput![0]
 
     setUploaderState({ ...uploaderState, saving: true })
 
-    await Storage.put(image_name_saved, image_file)
+    await Storage.put(imageNameWithId, image_file)
       .then(result => {
-        console.log("result", result)
         const uploadedImage: IImageData = {
-          name: image_file.name,
+          nameDisplayed: image_file.name,
+          nameWithId: imageNameWithId,
         }
 
         setUploaderState({
@@ -157,6 +163,8 @@ const ImageUpload: React.FunctionComponent<IImageUploadProps> = (
           fileURL: URL.createObjectURL(event.target.files![0]),
           saving: false,
         })
+
+        props.formOnChange(imageNameWithId)
       })
       .catch(err => {
         console.log("err", err)
@@ -266,7 +274,7 @@ const ImageUpload: React.FunctionComponent<IImageUploadProps> = (
                     component="span"
                     className={classes.textImageNameContainer}
                   >
-                    {getTruncatedFileName(uploaderState.image.name)}
+                    {getTruncatedFileName(uploaderState.image.nameDisplayed)}
                   </Box>
                 </Box>
               </Box>

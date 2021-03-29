@@ -53,6 +53,7 @@ const GET_LAYOUT_DATA = gql`
     layout(query: { websiteEmailId: $websiteEmailId }) {
       title
       testRichTextEditorContent
+      testImageUrl
     }
   }
 `
@@ -108,6 +109,7 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
   const classes = useStyles()
 
   const websiteEmailId: string = useContext(WebsiteEmailIdContext)
+    .websiteEmailId
 
   const { handleSubmit, reset, control } = useForm<IFormInput>({
     defaultValues,
@@ -156,18 +158,18 @@ const EditContentSection: React.FunctionComponent<IEditContentSectionProps> = ({
       <form className={classes.formTag} onSubmit={handleSubmit(onSubmit)}>
         <Box className={classes.formWrapper}>
           <Box className={classes.imageTestWidthBox}>
-            {/* <Controller
-              name="testImageUpload"
+            <Controller
+              name="testImageUrl"
               control={control}
               render={({ value, onChange }) => {
-                return ( */}
-            <ImageUpload
-              formEditorState={"1222.jpg_bb7faa02-4eb2-4a76-a3d3-53a39c0d518a"}
-              formOnChange={null}
-            />
-            {/* )
+                return (
+                  <ImageUpload
+                    formEditorState={value}
+                    formOnChange={onChange}
+                  />
+                )
               }}
-            /> */}
+            />
           </Box>
 
           <label>Title</label>

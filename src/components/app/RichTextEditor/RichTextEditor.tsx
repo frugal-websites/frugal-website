@@ -2,7 +2,6 @@ import React, { useState, useEffect, Fragment } from "react"
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Box, Button } from "@material-ui/core"
-import buttonStyles from "./buttonStyles.module.scss"
 
 import {
   EditorState,
@@ -20,9 +19,15 @@ import createLinkPlugin from "@draft-js-plugins/anchor"
 import { LinkifyPluginTheme } from "@draft-js-plugins/linkify/lib/theme"
 import createLinkifyPlugin from "@draft-js-plugins/linkify"
 
+// @ts-ignore
+import buttonStyles from "./buttonStyles.module.scss"
+// @ts-ignore
 import editorStyles from "./editorStyles.module.scss"
+// @ts-ignore
 import toolbarStyles from "./toolbarStyles.module.scss"
+// @ts-ignore
 import linkStyles from "./linkStyles.module.scss"
+// @ts-ignore
 import linkifyStyles from "./linkifyStyles.module.scss"
 
 import {

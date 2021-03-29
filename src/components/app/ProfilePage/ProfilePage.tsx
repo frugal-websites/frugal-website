@@ -106,6 +106,7 @@ const ProfilePage: React.FunctionComponent<IProfilePageProps> = ({}: IProfilePag
   const classes = useStyles()
 
   const websiteEmailId: string = useContext(WebsiteEmailIdContext)
+    .websiteEmailId
 
   const { handleSubmit, reset, control } = useForm<IFormInput>({
     defaultValues,
@@ -222,7 +223,7 @@ const ProfilePage: React.FunctionComponent<IProfilePageProps> = ({}: IProfilePag
               <LoadingButton
                 displayName={"Save"}
                 isLoading={mutationLoading}
-                isError={mutationError}
+                isError={mutationError != null}
               />
             </Box>
           </Box>

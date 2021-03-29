@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { WebsiteEmailIdContext } from "../../app/WebsiteEmailIdProvider/WebsiteEmailIdProvider"
 import {
   AppBar,
@@ -41,6 +41,8 @@ interface INavBarProps {
 
 const NavBar: React.FunctionComponent<INavBarProps> = ({ navLinks }) => {
   const classes = useStyles()
+  const websiteEmailId: string = useContext(WebsiteEmailIdContext)
+    .websiteEmailId
 
   const getLogStatusButton = (websiteEmailId: string) => {
     return websiteEmailId === "" ? (
@@ -64,43 +66,39 @@ const NavBar: React.FunctionComponent<INavBarProps> = ({ navLinks }) => {
   }
 
   return (
-    <WebsiteEmailIdContext.Consumer>
-      {websiteEmailId => (
-        <AppBar position="static" style={{ background: "#2E3B55" }}>
-          {/* maxWidth="md"  */}
-          <Box className={classes.root}>
-            <IconButton
-              color="inherit"
-              aria-label="home"
-              onClick={() => {
-                console.log(websiteEmailId)
-              }}
-            >
-              <Home fontSize="large" />
-            </IconButton>
-            <Hidden smDown>
-              <List
-                component="nav"
-                aria-labelledby="main navigation"
-                className={classes.navDisplayFlex}
-              >
-                {navLinks.map(({ name, path }) => (
-                  <a href={path} key={name} className={classes.linkText}>
-                    <ListItem button>
-                      <ListItemText primary={name} />
-                    </ListItem>
-                  </a>
-                ))}
-              </List>
-              {getLogStatusButton(websiteEmailId)}
-            </Hidden>
-            <Hidden mdUp>
-              <SideDrawer navLinks={navLinks} websiteEmailId={websiteEmailId} />
-            </Hidden>
-          </Box>
-        </AppBar>
-      )}
-    </WebsiteEmailIdContext.Consumer>
+    <AppBar position="static" style={{ background: "#2E3B55" }}>
+      {/* maxWidth="md"  */}
+      <Box className={classes.root}>
+        <IconButton
+          color="inherit"
+          aria-label="home"
+          onClick={() => {
+            console.log(websiteEmailId)
+          }}
+        >
+          <Home fontSize="large" />
+        </IconButton>
+        <Hidden smDown>
+          <List
+            component="nav"
+            aria-labelledby="main navigation"
+            className={classes.navDisplayFlex}
+          >
+            {navLinks.map(({ name, path }) => (
+              <a href={path} key={name} className={classes.linkText}>
+                <ListItem button>
+                  <ListItemText primary={name} />
+                </ListItem>
+              </a>
+            ))}
+          </List>
+          {getLogStatusButton(websiteEmailId)}
+        </Hidden>
+        <Hidden mdUp>
+          <SideDrawer navLinks={navLinks} websiteEmailId={websiteEmailId} />
+        </Hidden>
+      </Box>
+    </AppBar>
   )
 }
 
